@@ -15,7 +15,6 @@ const app = express();
 // ✅ Allow your React frontend to call this backend
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, Thunder Client)
     if (!origin) return callback(null, true);
     
     // Allow any localhost port
@@ -23,12 +22,17 @@ app.use(cors({
       return callback(null, true);
     }
     
-    // Allow your live Vercel frontend
-    if (origin === 'https://hananstamps.vercel.app/') {
+    // Allow all Vercel deployments for your project
+    if (origin.match(/^https:\/\/.*\.vercel\.app$/)) {
+      return callback(null, true);
+    }
+
+    // Allow your custom domains
+    if (origin === 'https://hananae.vercel.app' || 
+        origin === 'https://hananstamps.vercel.app') {
       return callback(null, true);
     }
     
-    // Block everything else
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
