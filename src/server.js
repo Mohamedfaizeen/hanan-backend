@@ -24,7 +24,7 @@ app.use(cors({
     }
     
     // Allow your live Vercel frontend
-    if (origin === 'https://hananae.vercel.app') {
+    if (origin === 'https://hananstamps.vercel.app/') {
       return callback(null, true);
     }
     
